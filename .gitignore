@@ -1,0 +1,10 @@
+info.php
+public/images/img-uploads
+public/lib/vendor
+*.dat
+SyncToy
+sitemap.xml
+.env
+info.php
+.vscode/
+b/
