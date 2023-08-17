@@ -10,7 +10,8 @@ class Admin extends Controller{
         $soLuongHangTonKho = $Bill->Get_SoLuongTonKho();
         $soLuongHangDangXuLy = $Bill->Get_SoLuongBillDangXuLy();
         $tongDoanhThu = $Bill->Get_tongDoanhThu();
-        $Top10SanPhamDuocMuaNhieuNhat = $Bill->Get_Top10SanPhamDuocMuaNhieuNhat();
+        // $Top10SanPhamDuocMuaNhieuNhat = $Bill->Get_Top10SanPhamDuocMuaNhieuNhat();
+        $Top10SanPhamDuocMuaNhieuNhat = null;
        
         // Call Views
         $this->view("admin", [
@@ -84,6 +85,7 @@ class Admin extends Controller{
             "ListProduct"=>$listProduct,
             "ListCategory"=>$listCategory,
             "ListColor"=>$this->model('Color')->GetColors(),
+            "ListMaterial"=>$this->model('Material')->GetMaterials(),
  
         ]);
     }

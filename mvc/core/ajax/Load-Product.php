@@ -34,6 +34,7 @@ foreach ($data['ListProduct'] as $key => $value) {
   </td>
   <td><?=$value['Name_Product']?></td>
   <td><?=$value['Name_Color']?></td>
+  <td><?=$value['Name_Material'] == NULL ? 'Không xác định' : $value['Name_Material']?></td>
   <td><?=$description?></td>
   <td><?=format_cash($value['Price'])?></td>
   <td><?=$value['Name_Category']?></td>
@@ -47,7 +48,7 @@ foreach ($data['ListProduct'] as $key => $value) {
       data-product-image="<?=$value['Avatar']?>"
       data-product-id_colors="<?=$value['ID_Color']?>"
       data-product-size="<?=$value['Size']?>"
-      data-product-material="<?=$value['Material']?>"
+      data-product-id_material="<?=$value['ID_Material']?>"
       >Update</button>
   	<button class="btn btn-danger p-1 m-1" onclick="DeleteProduct(<?=$value['ID_Product']?>)">Delete</button>
   </td>

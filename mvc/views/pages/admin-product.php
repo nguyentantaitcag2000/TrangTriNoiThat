@@ -20,6 +20,7 @@ ini_set('default_socket_timeout',300);
 		      <th scope="col">Ảnh sản phẩm</th>
 		      <th scope="col">Tên</th>
 		      <th scope="col">Màu sắc</th>
+		      <th scope="col">Chất liệu</th>
 		      <th scope="col">Mô tả</th>
 		      <th scope="col">Giá</th>
 		      <th scope="col">Danh mục</th>
@@ -78,10 +79,18 @@ ini_set('default_socket_timeout',300);
 	            <label for="size_product" class="col-form-label">Kích thước:</label>
 	            <input type='text' class="form-control" id="size_product"></input>
 	          </div>
-	          <div class="mb-3">
-	            <label for="material_product" class="col-form-label">Chất liệu:</label>
-	            <input type='text' class="form-control" id="material_product"></input>
-	          </div>
+	          <div class="input-group mb-3">
+						  <div class="input-group-prepend">
+						    <label class="input-group-text" for="inputGroupSelect01">Chất liệu:</label>
+						  </div>
+						  <select class="custom-select" id="color_product">
+						    <?php foreach ($data['ListMaterial'] as $key => $value) { ?>
+						    	<option value="<?=$value['ID_Material']?>"><?=$value['Name_Material']?></option>
+						    <?php }?>
+						  </select>
+						  <div class="container"></div>
+						  <input id="material_list" type="text" hidden />
+						</div>
 	          <div class="mb-3">
 					    <label class="form-label" for="price_product">Giá:</label>
 	          	<input type="number" id="price_product" class="form-control" onkeyup="EnterMoney(event)" onclick="EnterMoney(event)" required/>
@@ -152,10 +161,18 @@ ini_set('default_socket_timeout',300);
 	            <label for="size_product_update" class="col-form-label">Kích thước:</label>
 	            <input type='text' class="form-control" id="size_product_update"></input>
 	          </div>
-	          <div class="mb-3">
-	            <label for="material_product_update" class="col-form-label">Chất liệu:</label>
-	            <input type='text' class="form-control" id="material_product_update"></input>
-	          </div>
+	          <div class="input-group mb-3">
+						  <div class="input-group-prepend">
+						    <label class="input-group-text" for="inputGroupSelect01">Chất liệu:</label>
+						  </div>
+						  <select class="custom-select" id="color_product">
+						    <?php foreach ($data['ListMaterial'] as $key => $value) { ?>
+						    	<option value="<?=$value['ID_Material']?>"><?=$value['Name_Material']?></option>
+						    <?php }?>
+						  </select>
+						  <div class="container"></div>
+						  <input id="material_list_update" type="text" hidden />
+						</div>
 	          <div class="mb-3">
 					    <label class="form-label" for="price_product_update">Giá:</label>
 	          	<input type="number" id="price_product_update" class="form-control" onkeyup="EnterMoney(event)" onclick="EnterMoney(event)" required/>

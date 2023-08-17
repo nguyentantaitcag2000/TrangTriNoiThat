@@ -31,9 +31,7 @@ class Bill extends DB{
     }
     public function Get_SoLuongTonKho()
     {
-        return $this->get_row("SELECT SUM(ih.Amount_IH) as SoLuongHangTonKho FROM import_history ih
-            JOIN bill b ON b.ID_Bill = ih.ID_Bill
-            WHERE b.ID_BS != 2;
+        return $this->get_row("SELECT SUM(Amount_Product) as SoLuongHangTonKho FROM product
             ")['SoLuongHangTonKho'];
     }
     public function Get_SoLuongBillDangXuLy()

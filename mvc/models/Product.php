@@ -81,7 +81,21 @@ class Product extends DB{
     // }
     public function GetProducts()
     {
-        $result = mysqli_query($this->con, "SELECT p.Material, p.Size,p.ID_Product,p.ID_Category,p.Name_Product,p.Description,p.Price,p.Avatar,p.ID_Category,c.Name_Category,c.Icon,GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color,GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color FROM `product` p JOIN category c ON c.ID_Category = p.ID_Category JOIN detail_product_color dpc ON dpc.ID_Product = p.ID_Product JOIN color cl ON cl.ID_Color = dpc.ID_Color GROUP BY p.ID_Product ORDER BY p.ID_Product DESC;");
+        $result = mysqli_query($this->con, "SELECT p.Size,p.ID_Product,p.ID_Category,p.Name_Product,p.Description,p.Price
+        ,p.Avatar,p.ID_Category,c.Name_Category,c.Icon
+        ,GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color
+        ,GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color 
+        ,GROUP_CONCAT(mr.Name_Material SEPARATOR ', ') as Name_Material
+        ,GROUP_CONCAT(mr.ID_Material SEPARATOR ', ') AS ID_Material
+
+
+        FROM `product` p 
+        JOIN category c ON c.ID_Category = p.ID_Category 
+        JOIN detail_product_color dpc ON dpc.ID_Product = p.ID_Product 
+        JOIN color cl ON cl.ID_Color = dpc.ID_Color 
+        LEFT JOIN detail_product_material dpm ON dpm.ID_Material = p.ID_Product 
+        LEFT JOIN material mr ON mr.ID_Material = dpm.ID_Material 
+        GROUP BY p.ID_Product ORDER BY p.ID_Product DESC;");
         if (!$result)
         {
             die ('Câu truy vấn bị sai');

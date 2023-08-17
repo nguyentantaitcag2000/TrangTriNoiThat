@@ -125,26 +125,26 @@ DocTienBangChu.prototype.doc = function (SoTien) {
     }
 }
 // ĐỔI MÀU BACKGROUND KHI SCROLL LÊN XUỐNG
-// document.addEventListener('DOMContentLoaded', function() {
-// $(function() {
-//   'use strict';
-//   var view = $(window).height();
+document.addEventListener('DOMContentLoaded', function() {
+$(function() {
+  'use strict';
+  var view = $(window).height();
 
-//   $(window).scroll(function() {
-//     $('.change-background').each(function() {
-//       var elem = $(this);
-//       var elemTop = elem.offset().top;
-//       var elemBottom = elemTop + elem.height();
-//       var docViewTop = $(window).scrollTop();
-//       var docViewBottom = docViewTop + view;
+  $(window).scroll(function() {
+    $('.change-background').each(function() {
+      var elem = $(this);
+      var elemTop = elem.offset().top;
+      var elemBottom = elemTop + elem.height();
+      var docViewTop = $(window).scrollTop();
+      var docViewBottom = docViewTop + view;
 
-//       if (elemBottom < docViewTop || elemTop+100 > docViewBottom) { // elemTop+100 : nguyên nhân vì khi kéo lên trên đầu, thì thẻ div chứa sản phẩm vẫn còn trong khu vực hiển thị của màn hình nên mới + thêm 100 
-//         var bgColor = elem.data('background');
-//         $('body').css('background-image', "");
-//         $('body').css('background-color', bgColor);
-//         return false; // Đổi màu cho 1 phần tử thì không cần duyệt các phần tử khác nữa
-//       }
-//     });
-//   });
-// });
-// });
+      if (elemBottom < docViewTop || elemTop+100 > docViewBottom) { // elemTop+100 : nguyên nhân vì khi kéo lên trên đầu, thì thẻ div chứa sản phẩm vẫn còn trong khu vực hiển thị của màn hình nên mới + thêm 100 
+        var bgColor = elem.data('background');
+        $('body').css('background-image', "");
+        $('body').css('background-color', bgColor);
+        return false; // Đổi màu cho 1 phần tử thì không cần duyệt các phần tử khác nữa
+      }
+    });
+  });
+});
+});
