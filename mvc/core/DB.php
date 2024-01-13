@@ -4,8 +4,8 @@ class DB{
 
     public $con;
     protected $servername = "localhost";
-    protected $username = "root";
-    protected $password = "";
+    protected $username = "winmac";
+    protected $password = "root";
     protected $dbname = "pthtw2";
 
     function __construct(){

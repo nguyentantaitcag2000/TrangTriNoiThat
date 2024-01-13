@@ -48,7 +48,7 @@ foreach ($data['ListProduct'] as $key => $value) {
       data-product-image="<?=$value['Avatar']?>"
       data-product-id_colors="<?=$value['ID_Color']?>"
       data-product-size="<?=$value['Size']?>"
-      data-product-id_material="<?=$value['ID_Material']?>"
+      data-product-id_materials="<?=$value['ID_Material']?>"
       >Update</button>
   	<button class="btn btn-danger p-1 m-1" onclick="DeleteProduct(<?=$value['ID_Product']?>)">Delete</button>
   </td>

@@ -1,3 +1,6 @@
+*{
+  --width-sidebar-admin: 280px; 
+}
 body{
 	margin: 0;
 	padding:0;

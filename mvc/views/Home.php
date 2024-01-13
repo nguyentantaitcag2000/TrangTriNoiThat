@@ -58,7 +58,7 @@
           <?php }?>
          
           <div class="position-relative btn hover">
-              <span id='count_product_in_cart' class="position-absolute d-block bg-danger text-light rounded-circle w-25 text-center" style="right: 15px;top: -13px;"><?=count($data['ListShoppingCarts'])?></span>
+              <span id='count_product_in_cart' style="width:25px;height:25px;top: -10px;right: 4px;" class="position-absolute d-block bg-danger text-light rounded-circle text-center" style="right: 15px;top: -13px;"><?=count($data['ListShoppingCarts'])?></span>
               <a href="/Home/Cart">
                 <img src="../../../public/images/shopping-cart.png" class="me-3" style="width:35px;padding: 0;">  
               </a>

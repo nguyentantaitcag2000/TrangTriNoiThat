@@ -52,7 +52,6 @@
         	"Price" => $price_product,
         	"ID_Category" => $category_product,
         	"Avatar" => isset($image_upload_path_Absolute) ? $image_upload_path_Absolute: $oldImage,
-        	"Material" => $material_product,
         	"Size" => $size_product
         ), " ID_Product = '$id_product'");
         //Cập nhật màu sắc
@@ -70,6 +69,32 @@
                 foreach ($color_array as $key => $id_color) {
                     $result = $DB->insert("detail_product_color",array(
                         "ID_Color" => $id_color,
+                        "ID_Product" => $id_product
+                    ));
+                    if(!$result)
+                    {
+                        alertError("Lỗi: thêm màu sắc sản phẩm thất bại");
+                    }
+                }
+            }
+            
+        }
+        //
+		//Cập nhật màu sắc
+        if(isset($_POST['material_list']))
+        {
+        	$DB->query("DELETE FROM detail_product_material WHERE ID_Product = '$id_product' ");
+            $material_list = $_POST['material_list'];
+            $material_array = [];
+            if($material_list != '')
+            {
+                $material_array = explode(',', $material_list);
+            }
+            if($material_array>0)
+            {
+                foreach ($material_array as $key => $id_material) {
+                    $result = $DB->insert("detail_product_material",array(
+                        "ID_Material" => $id_material,
                         "ID_Product" => $id_product
                     ));
                     if(!$result)

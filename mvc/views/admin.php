@@ -18,11 +18,12 @@
 </head>
 <body>
     
-    <div class="container p-0 m-0">
-        <div class="row" style="width: 100vw;">
+    <div class="container-fluid">
+        <div class="row">
             <!-- SideBar -->
-            <div class="col-sm-4"  style="flex: 0;">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;">
+         
+            <div class="col-xs-12 col-md-12 col-lg-3"  >
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height:100%">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                       <span class="fs-4">Sidebar</span>
@@ -70,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col">
                  <?php
                     require_once "./mvc/views/pages/".$data['Page'].".php";
                     ?>

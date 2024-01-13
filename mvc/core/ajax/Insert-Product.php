@@ -78,6 +78,44 @@
                 
             }
             //
+             //Thêm màu sắc
+             if(isset($_POST['material_list']))
+             {
+ 
+                 $material_list = $_POST['material_list'];
+                 $material_array = [];
+                 if($material_list != '')
+                 {
+                     $material_array = explode(',', $material_list);
+                 }
+                 if(count($material_array)>0)
+                 {
+                     foreach ($material_array as $key => $id_material) {
+                         $result = $DB->insert("detail_product_material",array(
+                             "ID_Material" => $id_material,
+                             "ID_Product" => $ID_last_product
+                         ));
+                         if(!$result)
+                         {
+                             alertError("Lỗi: thêm chất liệu sản phẩm thất bại");
+                         }
+                     }
+                 }
+                 else
+                 {
+ 
+                     $result = $DB->insert("detail_product_material",array(
+                             "ID_Material" => 0,
+                             "ID_Product" => $ID_last_product
+                         ));
+                     if(!$result)
+                     {
+                         alertError("Lỗi: thêm chất liệu sản phẩm thất bại");
+                     }
+                 }
+                 
+             }
+             //
             if(isset($_FILES['detail_image_product']))
             {
 

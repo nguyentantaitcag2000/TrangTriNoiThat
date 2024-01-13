@@ -20,7 +20,7 @@
 			<form method="POST" action="/Home/Checkout/<?=$data['Product']['ID_Product']?>">
 				<span><b>Màu sắc:</b> <?=$data['Product']['Name_Color']?></span><br>
 				<span><b>Kích thước:</b> <?=$data['Product']['Size'] == NULL ? "Không xác định" : $data['Product']['Size']?></span><br>
-				<span><b>Chất liệu:</b> <?=$data['Product']['Material'] == NULL ? "Không xác định" : $data['Product']['Material']?></span><br>
+				<span><b>Chất liệu:</b> <?=$data['Product']['Name_Material'] == NULL ? "Không xác định" : $data['Product']['Name_Material'] ?></span><br>
 				<div class="row g-3 align-items-center">
 				  <div class="col-auto">
 				    <label for="inputPassword6" class="col-form-label">Số lượng</label>

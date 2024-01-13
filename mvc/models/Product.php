@@ -81,21 +81,38 @@ class Product extends DB{
     // }
     public function GetProducts()
     {
-        $result = mysqli_query($this->con, "SELECT p.Size,p.ID_Product,p.ID_Category,p.Name_Product,p.Description,p.Price
-        ,p.Avatar,p.ID_Category,c.Name_Category,c.Icon
-        ,GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color
-        ,GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color 
-        ,GROUP_CONCAT(mr.Name_Material SEPARATOR ', ') as Name_Material
-        ,GROUP_CONCAT(mr.ID_Material SEPARATOR ', ') AS ID_Material
-
-
+        $result = mysqli_query($this->con, "SELECT 
+        p.Size, p.ID_Product, p.ID_Category, p.Name_Product, p.Description, p.Price, p.Avatar,
+        c.Name_Category, c.Icon,
+        co.Name_Color, co.ID_Color,
+        mt.Name_Material, mt.ID_Material
         FROM `product` p 
         JOIN category c ON c.ID_Category = p.ID_Category 
-        JOIN detail_product_color dpc ON dpc.ID_Product = p.ID_Product 
-        JOIN color cl ON cl.ID_Color = dpc.ID_Color 
-        LEFT JOIN detail_product_material dpm ON dpm.ID_Material = p.ID_Product 
-        LEFT JOIN material mr ON mr.ID_Material = dpm.ID_Material 
-        GROUP BY p.ID_Product ORDER BY p.ID_Product DESC;");
+        
+        -- Get colors
+        LEFT JOIN (
+            SELECT 
+                dpc.ID_Product, 
+                GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color, 
+                GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color
+            FROM detail_product_color dpc 
+            JOIN color cl ON cl.ID_Color = dpc.ID_Color 
+            GROUP BY dpc.ID_Product
+        ) co ON co.ID_Product = p.ID_Product 
+        
+        -- Get materials
+        LEFT JOIN (
+            SELECT 
+                dpm.ID_Product, 
+                GROUP_CONCAT(mr.Name_Material SEPARATOR ', ') as Name_Material, 
+                GROUP_CONCAT(mr.ID_Material SEPARATOR ', ') AS ID_Material
+            FROM detail_product_material dpm 
+            LEFT JOIN material mr ON mr.ID_Material = dpm.ID_Material 
+            GROUP BY dpm.ID_Product
+        ) mt ON mt.ID_Product = p.ID_Product 
+        
+        ORDER BY p.ID_Product DESC;
+        ");
         if (!$result)
         {
             die ('Câu truy vấn bị sai');
@@ -110,7 +127,36 @@ class Product extends DB{
     }
     public function GetProductOfID($ID)
     {
-        $result = mysqli_query($this->con, "SELECT p.Material, p.Size, p.ID_Product,p.ID_Category,p.Name_Product,p.Description,p.Price,p.Avatar,p.ID_Category,c.Name_Category,c.Icon,GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color,GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color FROM `product` p JOIN category c ON c.ID_Category = p.ID_Category JOIN detail_product_color dpc ON dpc.ID_Product = p.ID_Product JOIN color cl ON cl.ID_Color = dpc.ID_Color WHERE p.ID_Product = '$ID' GROUP BY p.ID_Product ORDER BY p.ID_Product DESC");
+        $result = mysqli_query($this->con, "SELECT  p.Size, p.ID_Product,p.ID_Category,p.Name_Product,p.Description,
+        p.Price,p.Avatar,p.ID_Category,c.Name_Category,c.Icon
+        ,co.Name_Color
+        ,co.ID_Color 
+        ,mt.Name_Material
+        ,mt.ID_Material
+        FROM `product` p 
+        JOIN category c ON c.ID_Category = p.ID_Category 
+        -- Get colors
+        LEFT JOIN (
+            SELECT 
+                dpc.ID_Product, 
+                GROUP_CONCAT(cl.Name_Color SEPARATOR ', ') as Name_Color, 
+                GROUP_CONCAT(cl.ID_Color SEPARATOR ', ') AS ID_Color
+            FROM detail_product_color dpc 
+            JOIN color cl ON cl.ID_Color = dpc.ID_Color 
+            GROUP BY dpc.ID_Product
+        ) co ON co.ID_Product = p.ID_Product 
+        
+        -- Get materials
+        LEFT JOIN (
+            SELECT 
+                dpm.ID_Product, 
+                GROUP_CONCAT(mr.Name_Material SEPARATOR ', ') as Name_Material, 
+                GROUP_CONCAT(mr.ID_Material SEPARATOR ', ') AS ID_Material
+            FROM detail_product_material dpm 
+            LEFT JOIN material mr ON mr.ID_Material = dpm.ID_Material 
+            GROUP BY dpm.ID_Product
+        ) mt ON mt.ID_Product = p.ID_Product 
+        WHERE p.ID_Product = '$ID' GROUP BY p.ID_Product ORDER BY p.ID_Product DESC");
         if (!$result)
         {
             die ('Câu truy vấn bị sai');

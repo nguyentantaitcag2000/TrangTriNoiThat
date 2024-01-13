@@ -10,34 +10,31 @@ ini_set('default_socket_timeout',300);
 
 <h3>Danh sách các sản phẩm:</h3>
 
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-		<table id="table" class="table table-image" data-sort-name="ID" data-sort-order="desc">
-		  <thead>
-		    <tr>
-		      <th scope="col">ID</th>
-		      <th scope="col">Ảnh sản phẩm</th>
-		      <th scope="col">Tên</th>
-		      <th scope="col">Màu sắc</th>
-		      <th scope="col">Chất liệu</th>
-		      <th scope="col">Mô tả</th>
-		      <th scope="col">Giá</th>
-		      <th scope="col">Danh mục</th>
-		      <th scope="col">Hành động</th>
-		    </tr>
-		  </thead>
-		  <tbody id="product_list" >
-		    
-	    	<?php
-	    		require_once('./mvc/core/ajax/Load-Product.php');
-	      ?>
-		   
-		  </tbody>
-		</table>   
-    </div>
-  </div>
-</div>
+
+<table id="table" class="table table-image" data-sort-name="ID" data-sort-order="desc">
+	<thead>
+	<tr>
+		<th scope="col">ID</th>
+		<th scope="col">Ảnh sản phẩm</th>
+		<th scope="col">Tên</th>
+		<th scope="col">Màu sắc</th>
+		<th scope="col">Chất liệu</th>
+		<th scope="col">Mô tả</th>
+		<th scope="col">Giá</th>
+		<th scope="col">Danh mục</th>
+		<th scope="col">Hành động</th>
+	</tr>
+	</thead>
+	<tbody id="product_list" >
+	
+	<?php
+		require_once('./mvc/core/ajax/Load-Product.php');
+	?>
+	
+	</tbody>
+</table>   
+
+
 <div id="thongbao"></div>
 <!-- INSERT MODEL -->
 <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,7 +80,7 @@ ini_set('default_socket_timeout',300);
 						  <div class="input-group-prepend">
 						    <label class="input-group-text" for="inputGroupSelect01">Chất liệu:</label>
 						  </div>
-						  <select class="custom-select" id="color_product">
+						  <select class="custom-select" id="material_product">
 						    <?php foreach ($data['ListMaterial'] as $key => $value) { ?>
 						    	<option value="<?=$value['ID_Material']?>"><?=$value['Name_Material']?></option>
 						    <?php }?>
@@ -165,7 +162,7 @@ ini_set('default_socket_timeout',300);
 						  <div class="input-group-prepend">
 						    <label class="input-group-text" for="inputGroupSelect01">Chất liệu:</label>
 						  </div>
-						  <select class="custom-select" id="color_product">
+						  <select class="custom-select" id="material_product_update">
 						    <?php foreach ($data['ListMaterial'] as $key => $value) { ?>
 						    	<option value="<?=$value['ID_Material']?>"><?=$value['Name_Material']?></option>
 						    <?php }?>
@@ -305,16 +302,16 @@ ini_set('default_socket_timeout',300);
 		    	 			return;
 					var div = this.nextElementSibling.firstChild;
 
-		    	 if(div==null)
-		    	 {
+					if(div==null)
+					{
 
-		    	 		var div2 = document.createElement('div');
-		    	 		div2.className = 'row';
-		    	 		this.nextElementSibling.appendChild(div2);
-		    	 		div = this.nextElementSibling.firstChild;
-		    	 }
-		    	 var inputHidden = this.nextElementSibling.nextElementSibling;
-		    	 var box = document.createElement('div');
+							var div2 = document.createElement('div');
+							div2.className = 'row';
+							this.nextElementSibling.appendChild(div2);
+							div = this.nextElementSibling.firstChild;
+					}
+					var inputHidden = this.nextElementSibling.nextElementSibling;
+					var box = document.createElement('div');
   					box.style.position = 'relative';
   					box.className='col-md-auto';
 
@@ -327,7 +324,7 @@ ini_set('default_socket_timeout',300);
   					box.appendChild(icon_delete); 
   					var span = document.createElement('span');
   					span.textContent = this.options[this.selectedIndex].text;
-  					span.setAttribute('data-id',this.value);
+  					span.setAttribute('data-id',this.value);debugger;
   					var rg = new RegExp(`,${this.value}|${this.value}|${this.value},`); // Nếu đã có chứa mã màu này rồi thì sẽ không thêm
   					if(!rg.test(inputHidden.value))
   					{
@@ -388,7 +385,8 @@ ini_set('default_socket_timeout',300);
 				document.querySelector("#image_product_update").addEventListener("change", readFile);
 				document.querySelector("#color_product").addEventListener("change", addColor);
 				document.querySelector("#color_product_update").addEventListener("change", addColor);
-
+				document.querySelector("#material_product").addEventListener("change", addColor);
+				document.querySelector("#material_product_update").addEventListener("change", addColor);
 			  document.getElementById('insert_form').addEventListener('submit',function(event){
 
 				  var name_product = document.getElementById('name_product').value;
@@ -396,6 +394,7 @@ ini_set('default_socket_timeout',300);
 				  var price_product = document.getElementById('price_product').value;
 				  var category_product = document.getElementById('category_product').value;
 				  var color_list = document.getElementById('color_list').value;
+				  var material_list = document.getElementById('material_list').value;
 				  var size_product = document.getElementById('size_product').value;
 				  var material_product = document.getElementById('material_product').value;
 				  event.preventDefault();
@@ -420,6 +419,7 @@ ini_set('default_socket_timeout',300);
 				  formData.append('price_product', price_product);
 				  formData.append('category_product', category_product);
 				  formData.append('color_list', color_list);
+				  formData.append('material_list', material_list);
 				  formData.append('size_product', size_product);
 				  formData.append('material_product', material_product);
 
@@ -511,6 +511,7 @@ ini_set('default_socket_timeout',300);
 			  		var image_product_update = event.target.getAttribute('data-product-image');
 			  		var detail_image_product_update = event.target.getAttribute('data-product-detail-image');
 			  		var id_colors = event.target.getAttribute('data-product-id_colors');
+			  		var id_materials = event.target.getAttribute('data-product-id_materials');
 			  		var size = event.target.getAttribute('data-product-size');
 			  		var material = event.target.getAttribute('data-product-material');
 			  		$('#name_product_update').val(productName);
@@ -521,13 +522,19 @@ ini_set('default_socket_timeout',300);
 			  		$('#size_product_update').val(size);
 			  		$('#material_product_update').val(material);
 			  		var select_input = document.getElementById('color_product_update');
+			  		var material_select_input = document.getElementById('material_product_update');
 			  		id_colors.split(',').forEach(function(id){
 			  			select_input.value = id.trim();
 				  			// Tạo và kích hoạt sự kiện change
 							var event = new Event("change");
 							select_input.dispatchEvent(event);
 			  		});
-			  		
+			  		id_materials.split(',').forEach(function(id){
+						material_select_input.value = id.trim();
+				  			// Tạo và kích hoạt sự kiện change
+							var event = new Event("change");
+							material_select_input.dispatchEvent(event);
+			  		});
 			  		base64Image_Array = [];
 
 			  		base64Image_Array[base64Image_Array.length] = image_product_update;
@@ -578,6 +585,7 @@ ini_set('default_socket_timeout',300);
 				  var category_product = document.getElementById('category_product_update').value;
 				  var id_product = document.getElementById('id_product_update').value;
 				  var color_list = document.getElementById('color_list_update').value;
+				  var material_list = document.getElementById('material_list_update').value;
 				  var size_product = document.getElementById('size_product_update').value;
 				  var material_product = document.getElementById('material_product_update').value;
 				  event.preventDefault();
@@ -605,6 +613,7 @@ ini_set('default_socket_timeout',300);
 				  formData.append('category_product', category_product);
 				  formData.append('id_product', id_product);
 					formData.append('color_list', color_list);
+					formData.append('material_list', material_list);
 					formData.append('size_product', size_product);
 					formData.append('material_product', material_product);
 					
